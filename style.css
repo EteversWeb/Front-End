@@ -1,0 +1,77 @@
+/* 기본 스타일 */
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 컨테이너 */
+  
+  .container {
+    width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* 로그인 폼 */
+  
+  .login-form {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* 로그인 제목 */
+  
+  .login-form h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  /* 입력 필드 */
+  
+  .login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* 아이디 저장 */
+  
+
+  
+  .remember-me {
+    margin-bottom: 10px;
+  }
+  
+  .remember-me input {
+    margin-right: 5px;
+  }
+  
+  /* 로그인 버튼 */
+  
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* 링크 */
+  
+  .links {
+    text-align: right;
+  }
+  
+  .links a {
+    margin-left: 10px;
+    color: #000;
+    text-decoration: none;
+  }
+  
