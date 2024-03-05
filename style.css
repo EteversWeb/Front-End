@@ -1,0 +1,108 @@
+/* 기본 스타일 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    line-height: 1.6;
+  }
+  
+  /* 컨테이너 */
+  
+  .container {
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+  }
+  
+  /* 제목 */
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* 양식 */
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 입력 그룹 */
+  
+  .input-group {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 레이블 */
+  
+  label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* 입력 항목 */
+  
+  input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 30px;
+  }
+  
+  /* 버튼 */
+  
+  button {
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background-color: #ddd;
+  }
+  
+  /* 특정 요소 스타일 */
+  
+  .btn-check {
+    margin-left: 0px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .btn-submit {
+    margin-top: -40px;
+    align-self: flex-end;
+    background-color: #000;
+    color: #fff;
+  }
+  
+  /* 체크박스 */
+  
+  input[type="checkbox"] {
+    margin-left: -50px;
+  }
+  
+  /* 선택 드롭다운 */
+  
+  select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 30px;
+  }
+  
