@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원 탈퇴</title>
+  <style>
+    body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-top: 0;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* 폼 스타일 */
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* 버튼 스타일 */
+
+.button-group {
+  text-align: right;
+}
+
+.btn {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: #333;
+}
+
+/* 추가 스타일 */
+
+.reason-list {
+  list-style: none;
+  padding: 0;
+}
+
+.reason-list li {
+  margin-bottom: 5px;
+}
+
+.reason-list input {
+  margin-right: 5px;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>정말 탈퇴하시겠어요?</h1>
+    <p>탈퇴 버튼 선택 시 계정은 삭제되며 복구되지 않아요.</p>
+    <p>정말 탈퇴 하시겠습니까?</p>
+    <form action="/member/withdraw" method="post">
+      <input type="hidden" name="_csrf" value="csrf_token">
+      <div class="form-group">
+        <label for="reason">탈퇴 사유</label>
+        <textarea name="reason" id="reason" rows="5" required></textarea>
+      </div>
+      <div class="button-group">
+        <button type="submit" class="btn btn-danger">탈퇴하기</button>
+        <a href="/" class="btn btn-secondary">취소</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
