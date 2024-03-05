@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, redirect
 from function import error, login_required
 from flask_session import Session
-import mysql.connector
+from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
@@ -9,17 +9,33 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+app.config["MYSQL_HOST"] = "127.0.0.1"
+app.config["MYSQL_USER"] = "root"
+app.config["MYSQL_PASSWORD"] = "1111"
+app.config["MYSQL_DB"] = "new"
 
-@app.route("/")
+mysql = MySQL(app)
+
+
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    if request.method == "POST":
+        button = request.form["button"]
+        if button == "login":
+            redirect("/login")
+        elif button == "register":
+            redirect("register")
+        else:
+            error("idk")
+    else:
+        return render_template("index.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     session.clear()
     if request.method == "POST":
-        if request.form.get("로그인버튼"):
+        if request.form.get("button"):
             # 로그인에 대한 기능
             pass
         if request.form.get("회원가입버튼"):
@@ -105,17 +121,62 @@ def statistics():
 @app.route("/read-post", methods=["GET", "POST"])
 @login_required
 def read_post():
-    # 글의 정보를 글의 id 기반으로 딕셔너리 형태로 두개를 받아온다.
-    딕셔너리1 = {}
-    딕셔너리2 = {}
+
     if request.method == "POST":
-        return render_template(
-            "read-post.html", 딕셔너리1=딕셔너리1, 딕셔너리2=딕셔너리2
-        )
+        current_diary_id = request.form["button"]
     else:
-        return render_template(
-            "read-post.html", 딕셔너리1=딕셔너리1, 딕셔너리2=딕셔너리2
+        current_diary_id = request.form["diary_id"]
+
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "SELECT diary_id, diary_title, diary_cont, diray_date FROM diary WHERE user_id = ? ORDER BY diary_id;",
+        session["user_email"],
+    )
+    diary_list = cur.fetchall()
+    cur.close()
+    diary = {}
+    prev_diary_id, next_diary_id = 0, 0
+    for diary_id, diary_title, diary_cont, diary_date in diary_list:
+        if diary_id < current_diary_id:
+            prev_diary_id = diary_id
+        elif current_diary_id < diary_id:
+            next_diary_id = diary_id
+            break
+        else:
+            diary["title"] = diary_title
+            diary["cont"] = diary_cont
+            diary["date"] = diary_date
+
+    return render_template(
+        "read-post.html",
+        prev_diary_id=prev_diary_id,
+        next_diary_id=next_diary_id,
+        diary=diary,
+    )
+
+
+@app.route("/write-post", methods=["GET", "POST"])
+@login_required
+def read_post():
+    # 글의 정보를 받아서 포스
+    if request.method == "POST":
+
+        title = request.form["title"]
+        content = request.form["content"]
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "INSERT INTO 'diary' (diary_title, diary_cont, user_id, diray_date) VALUES (?, ?, ?, NOW())",
+            title,
+            content,
+            session["user_email"],
         )
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect("/mypage")
+    else:
+        return render_template("write-post.html")
 
 
 @app.route("/search", methods=["GET", "POST"])
