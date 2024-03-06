@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, redirect
+from werkzeug.security import generate_password_hash
 from function import error, login_required
 from flask_session import Session
 from flask_mysqldb import MySQL
@@ -136,6 +137,7 @@ def read_post():
     cur.close()
     diary = {}
     prev_diary_id, next_diary_id = 0, 0
+
     for diary_id, diary_title, diary_cont, diary_date in diary_list:
         if diary_id < current_diary_id:
             prev_diary_id = diary_id
@@ -157,7 +159,7 @@ def read_post():
 
 @app.route("/write-post", methods=["GET", "POST"])
 @login_required
-def read_post():
+def write_post():
     # 글의 정보를 받아서 포스
     if request.method == "POST":
 
@@ -177,24 +179,3 @@ def read_post():
         return redirect("/mypage")
     else:
         return render_template("write-post.html")
-
-
-@app.route("/search", methods=["GET", "POST"])
-@login_required
-def read_post():
-    # 글의 정보를 글의 id 기반으로 딕셔너리 형태로 두개를 받아온다.
-    딕셔너리리스트 = [{}]
-    키워드 = ""
-    리스트길이 = len(딕셔너리리스트)
-    if request.method == "POST":
-        # 클릭한 글의 아이디를 받아와서
-        return render_template(
-            "read-post.html", 딕셔너리1=딕셔너리1, 딕셔너리2=딕셔너리2
-        )
-    else:
-        return render_template(
-            "search.html",
-            딕셔너리리스트=딕셔너리리스트,
-            키워드=키워드,
-            리스트길이=리스트길이,
-        )
