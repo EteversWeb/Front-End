@@ -66,11 +66,30 @@ def logout():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        # db에 업데이트 하는 로직
-        # 아이디 중복여부
-        # 비밀번호 두개가 일치하는지 여부
-        # 전부 확인되면 db에 입력
-        pass
+        # 회원 가입 양식에서 입력된 정보 가져오기
+        username = request.form["username"]
+        password = request.form["password"]
+        question_id = request.form["question"]
+        answer = request.form["answer"]
+        password_confirm = request.form["password-confirm"]
+        agree = request.form.get("agree")
+
+        # 개인정보 처리방침 동의 여부 확인
+        if not agree:
+            return "개인정보 처리방침에 동의해야 가입할 수 있습니다."
+
+        # 비밀번호 확인
+        if password != password_confirm:
+            return "비밀번호가 일치하지 않습니다."
+        # 데이터베이스에 회원 정보 저장
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "INSERT INTO user (user_id, user_pwd, user_ans, question_id) VALUES (%s, %s, %s, %s)",
+            (username, password, answer, question_id),
+        )
+        mysql.connection.commit()
+        cur.close()
+        return redirect("/login")  # 가입 후 로그인 페이지로 리다이렉트
     else:
         return render_template("register.html")
 
