@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, redirect, request, url_for
+from flask import Flask, session, render_template, redirect, request
 from flaskext.mysql import MySQL
  
 mysql = MySQL()
@@ -33,11 +33,6 @@ def main():
         for row in data:
             data = row[0]
  
-        if data:
-            session['login_user'] = id
-            return redirect(url_for('home'))
-        else:
-            error = 'invalid input data detected !'
     return render_template('main.html', error = error)
  
  
