@@ -95,8 +95,19 @@ def mypage():
 @app.route("/password-find", methods=["GET", "POST"])
 def password_find():
     if request.method == "POST":
-        # 폼에서 받는 정보와 db에 있는 정보가 일치하는지 확인 후
-        return render_template("password-reset.html")
+        user_email = request.form["email"]
+
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT user_ans FROM user WHERE user_id = ?;", user_email)
+        user_ans = cur.fetchall()
+        cur.close()
+
+        if user_ans == None:
+            error("그런사람없읍니다.")
+        if user_ans != request.form["answer"]:
+            error("답변이 틀렸습니다.")
+        else:
+            render_template("password-reset.html")
     else:
         return render_template("password-find.html")
 
@@ -105,8 +116,21 @@ def password_find():
 def password_reset():
     if request.method == "POST":
         # db에 비밀번호 업데이트 후 재설정
+        pwd_check = request.form["pwd_check"]
+        pwd_recheck = request.form["pwd_recheck"]
 
-        return redirect("/")
+        if pwd_check != pwd_recheck:
+            error("비밀번호가 일치하지 않습니다.")
+        else:
+            pwd_new = generate_password_hash(pwd_check, method="pbkdf2", salt_length=16)
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "UPDATE user SET user_pwd=? WHERE user_id = ?;",
+                pwd_new,
+                session["user_email"],
+            )
+            mysql.connection.commit()
+            cur.close()
     else:
         return render_template("password-reset.html")
 
