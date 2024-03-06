@@ -38,14 +38,34 @@ def login():
     if request.method == "POST":
         if request.form.get("button"):
             # 로그인에 대한 기능
-            pass
-        if request.form.get("회원가입버튼"):
+            username = request.form["user_id"]
+            password = request.form["user_pwd"]
+            password_hash = generate_password_hash(
+                password, method="pbkdf2", salt_length=16
+            )
+
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "SELECT * FROM user WHERE user_id=? AND user_pwd=?",
+                (username, password_hash),
+            )
+            user = cur.fetchone()
+            cur.close()
+
+            if user:
+                session["user_email"] = username
+                return render_template("mypage.html")
+            else:
+                return render_template(
+                    "error.html",
+                    message="로그인 실패, 아이디 또는 패스워드를 확인하세요.",
+                )
+        elif request.form.get("회원가입버튼"):
             # 회원가입에 대한 기능
-            pass
-        if request.form.get("아이디_비밀번호버튼"):
+            redirect("/register")
+        elif request.form.get("아이디_비밀번호버튼"):
             # 비밀번호 찾기에 대한 기능
-            pass
-        return redirect("/mypage")
+            redirect("/password-find")
     else:
         return render_template("login.html")
 
@@ -203,3 +223,25 @@ def write_post():
         return redirect("/mypage")
     else:
         return render_template("write-post.html")
+
+
+@app.route("/search", methods=["GET", "POST"])
+@login_required
+def search():
+    # 글의 정보를 받아서 포스
+    if request.method == "POST":
+        return redirect("/read-post")
+    else:
+        term = request.form["term"]
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT diary_id, diary_title, diary_cont, diray_date FROM diary WHERE title LIKE '%?%' OR content LIKE '%?% ORDER BY diary_id';",
+            term,
+            term,
+        )
+        diary_list = cur.fetchall()
+        cur.close()
+
+        return render_template(
+            "search.html", diary_list=diary_list, term=term, number=len(diary_list)
+        )
