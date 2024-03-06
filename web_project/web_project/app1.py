@@ -11,7 +11,7 @@ Session(app)
 
 app.config["MYSQL_HOST"] = "127.0.0.1"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = "1111"
+app.config["MYSQL_PASSWORD"] = "1234"
 app.config["MYSQL_DB"] = "new"
 
 mysql = MySQL(app)
@@ -79,11 +79,30 @@ def register():
 @login_required
 def deregister():
     if request.method == "POST":
-        # db에 탈퇴사유 업데이트 하는 로직
-
-        return redirect("/")
+        if request.form.get("withdraw"):
+            reason = request.form.get("reason")  # 탈퇴 사유를 가져옴
+            # 사용자 정보를 why_secession 테이블에 저장
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "INSERT INTO why_secession (user_id, reason) VALUES (%s, %s)",
+                (session["user_id"], reason),
+            )
+            mysql.connection.commit()
+            cur.close()
+            # 사용자 정보를 user 테이블에서 삭제
+            cur = mysql.connection.cursor()
+            cur.execute("DELETE FROM user WHERE id = %s", (session["user_id"],))
+            mysql.connection.commit()
+            cur.close()
+            # 로그아웃 후 로그인 페이지로 리디렉션
+            session.clear()
+            return redirect("/login")
+        else:
+            return redirect("/mypage")
     else:
         return render_template("deregister.html")
+
+
 
 
 @app.route("/mypage", methods=["GET", "POST"])

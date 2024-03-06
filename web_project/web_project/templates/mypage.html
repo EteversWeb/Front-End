@@ -1,101 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>마이페이지</title>
-    <link rel="stylesheet" href="noticeBoard.css">
-    <style>
-        body {
-    margin: 0;
-    padding: 0;
-    background-color: #f2f2f2;
-    }
+{% extends "layout.html" %}
 
-    h1 {
-        text-align: center;
-        margin-top: 50px;
-        color: #333;
-    }
-
-    .searchContainer {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .search {
-        display: inline-block;
-    }
-
-    .searchFild {
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-
-    .searchButton {
-        padding: 8px 15px;
-        border-radius: 5px;
-        background-color: #060a0f;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-    }
-
-    table {
-        width: 80%;
-        margin: 0 auto;
-        border-collapse: collapse;
-        margin-top: 30px;
-    }
-
-    th, td {
-        padding: 10px;
-        border: 1px solid #ccc;
-        text-align: center;
-    }
-
-    th {
-        background-color: #060a0f;
-        color: #fff;
-    }
-
-    .center {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .center a {
-        margin: 0 10px;
-        color: #060a0f;
-        text-decoration: none;
-    }
-
-    .right {
-        text-align: right;
-        margin-top: 20px;
-    }
-
-    .greylist {
-        background-color: #ccc;
-        color: #333;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .gradient {
-        background: linear-gradient(to right, #060a0f, #060a0f);
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        color: #fff;
-        cursor: pointer;
-    }
-    </style>
-</head>
-<body>
-    <h1 class="firstH1">마이페이지</h1>
+{% block body %}
+<h1 class="firstH1">마이페이지</h1>
     <div class="searchContainer">
         <div class="search">
             <input class="searchFild" type="text" name="utext" placeholder="검색어를 입력해주세요">
@@ -141,5 +47,4 @@
         <input type="button" value="글쓰기" class="gradient" onclick="window.location.href='writing.html'">
         <input type="file" id="fileUpload" style="display: none;">
     </span>
-</body>
-</html>
+{% endblock %}
