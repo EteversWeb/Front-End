@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1 class="firstH1">마이페이지</h1>
+    <div class="searchContainer">
+        <div class="search">
+            <input class="searchFild" type="text" name="utext" placeholder="검색어를 입력해주세요">
+            <button class="searchButton" name="button">검색</button>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일자</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {% for diary in diary_list %}
+            <td><form action="/read-post"><button name="diary_id" type="submit" value="{{diary_id}}">{{diary["title"]}}</button></form></td>
+            {% if diary["cont"] | length > 20 %}
+            <td class="left">{{diary["cont"][:20] + "..."}}</td>
+            {% else %}
+            <td class="left">{{diary["cont"]}}</td>
+            {% endif %}
+            <td class="center">{{diary["date"]}}</td>
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+
+    <div class="center">
+        <a href="#">◀ 이전</a>
+        <a href="#">1</a>
+        <a href="#">다음 ▶</a>
+    </div>
+
+    <span class="right">
+        <input type="button" value="목록" class="greylist">
+        <input type="button" value="글쓰기" class="gradient" onclick="window.location.href='writing.html'">
+        <input type="file" id="fileUpload" style="display: none;">
+    </span>
+{% endblock %}
