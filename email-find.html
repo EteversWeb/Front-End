@@ -1,14 +1,80 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-{% block body %}
-            <h1>Find Password</h1>
-            <form action="/email-find" method="post">
-                <div class="form-group">
-                    <label for="email">이메일</label><br>
-                    <input type="email" id="email" name="email" placeholder="이메일 주소를 입력하세요." class="form-control" required>
-                </div><p></p>
-                <div class="form-group"></div>
-                    <button type="submit">아이디 확인</button>
-                </div>
-            </form>
-{% endblock %}
+        .container {
+            width: 400px; 
+            padding: 47px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+
+        .form-group {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="email"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: #060a0f;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find Password</h1>
+        <form action="find_password.php" method="post">
+            <div class="form-group">
+                <label for="email">이메일</label><br>
+                <input type="email" id="email" name="email" placeholder="이메일 주소를 입력하세요." class="form-control" required>
+            </div><p></p>
+            <div class="form-group"></div>
+                <button type="submit">아이디 확인</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
