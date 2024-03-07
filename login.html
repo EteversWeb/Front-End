@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-box {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-box input[type="email"],
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #060a0f;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background-color: #333;
+        }
+
+        .login-box a {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #060a0f;
+        }
+
+        .login-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h1>Member Login</h1>
+            <form action="/login" method="post">
+                <input autofocus type="email" name="email" placeholder="아이디" required><br>
+                <input autofocus type="password" name="password" placeholder="비밀번호" required><br>
+                <button type="submit" class="button">로그인 하기</button><p></p>
+            </form>
+            <a href="/register">회원가입하기</a><br>
+            <a href="/password-find">아이디/비밀번호를 잊어버리셨나요?</a><br>
+        </div>
+    </div>
+</body>
+</html>
