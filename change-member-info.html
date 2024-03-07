@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block body %}
+            <form action="/password-reset", method="get">
+                <button type="submit">비밀번호 변경</button>
+            </form>
+            <form action="/deregister", method="post">
+                <button type="submit">회원탈퇴</button>
+            </form>
+{% endblock %}
